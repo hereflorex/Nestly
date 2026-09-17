@@ -1,1 +1,33 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dashboard · Nestly</title><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head><body><header class="nav shell"><a class="brand" href="/"><span class="brand-mark">N</span>Nestly</a><a class="outline-btn" href="{{ url_for('main.logout') }}">Logout</a></header><main class="dashboard shell"><div class="eyebrow">ACCOUNT SPACE</div><h1>Welcome, {{ username }}.</h1><p class="muted">Your Nestly workspace is ready.</p><div class="dashboard-grid"><section class="dash-card"><span>01</span><h2>Create a private room</h2><p>Generate an invite link for a specific conversation.</p><form method="post" action="{{ url_for('main.create_room') }}"><button class="primary-btn" type="submit">Create room ↗</button></form></section><section class="dash-card"><span>02</span><h2>Your access</h2><p>Role: <b>{{ role|capitalize }}</b></p><p class="muted">Admin and moderator controls will be enabled through explicit role permissions.</p></section></div></main></body></html>
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nestly · Messages</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+<div class="brand-row"><a class="brand" href="{{ url_for('main.index') }}"><span>N</span>Nestly</a><button class="icon-btn" id="closeSidebar">×</button></div>
+<div class="profile-mini"><div class="avatar avatar-gradient">{{ (username or 'U')[:1]|upper }}</div><div><strong>{{ username or 'User' }}</strong><small>Available</small></div></div>
+<label class="search-box">⌕ <input id="userSearch" type="search" placeholder="Search people"></label>
+<div class="side-section"><div class="section-heading">Workspace</div><button class="side-link active">◈ Chats <b>3</b></button><button class="side-link">♧ Groups</button><button class="side-link">☆ Saved</button></div>
+<div class="side-section"><div class="section-heading">Recent conversations <button class="tiny-btn" id="newChat">＋</button></div>
+<div id="conversationList">
+<button class="conversation active" data-name="Ari" data-status="Online"><div class="avatar avatar-blue">A</div><div class="conversation-copy"><strong>Ari</strong><p>See you soon ✨</p></div><time>10:42</time></button>
+<button class="conversation" data-name="FLOREX Team" data-status="4 members"><div class="avatar avatar-purple">F</div><div class="conversation-copy"><strong>FLOREX Team</strong><p>New design is ready</p></div><time>09:18</time></button>
+<button class="conversation" data-name="Mira" data-status="Recently active"><div class="avatar avatar-green">M</div><div class="conversation-copy"><strong>Mira</strong><p>That sounds good!</p></div><time>Yesterday</time></button>
+</div></div>
+<div class="sidebar-bottom"><button class="side-link" id="themeToggle">☾ Appearance</button><a class="side-link" href="{{ url_for('main.logout') }}">↪ Log out</a></div>
+</aside>
+<main class="chat-area">
+<header class="chat-header"><button class="icon-btn mobile-only" id="openSidebar">☰</button><div class="chat-person"><div class="avatar avatar-blue" id="chatAvatar">A</div><div><strong id="chatName">Ari</strong><small id="chatStatus">Online</small></div></div><div class="chat-actions"><button class="icon-btn" id="chatInfo">ⓘ</button></div></header>
+<section class="message-scroll" id="messageScroll"><div class="day-divider">Today</div><div class="message incoming"><span class="message-author">Ari</span>Hey, are we still meeting later?<time>10:41</time></div><div class="message outgoing">Absolutely. I’ll share the details here.<time>10:42 ✓✓</time></div><div class="message incoming compact">Perfect ✨<time>10:42</time></div></section>
+<form class="composer" id="composer"><button class="icon-btn" type="button" id="attachBtn">＋</button><input id="messageInput" placeholder="Write a message..." maxlength="2000"><button class="send-btn" type="submit">↑</button></form>
+</main>
+<aside class="details-panel" id="detailsPanel"><div class="details-cover"></div><div class="details-content"><div class="details-avatar avatar avatar-blue" id="detailsAvatar">A</div><h2 id="detailsName">Ari</h2><p id="detailsStatus">Online</p><div class="details-actions"><button class="detail-action" id="muteBtn">🔕<span>Mute</span></button><button class="detail-action" id="blockBtn">⛔<span>Block</span></button><button class="detail-action" id="reportBtn">⚑<span>Report</span></button></div><div class="info-card"><span>About</span><strong>Available for a conversation.</strong></div><div class="info-card"><span>Privacy</span><strong>Messages are private to this conversation.</strong></div></div></aside>
+</div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

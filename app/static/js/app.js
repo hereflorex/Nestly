@@ -1,17 +1,13 @@
-const themeButton = document.getElementById('themeBtn');
-const savedTheme = localStorage.getItem('nestly-theme') || 'dark';
-
-function applyTheme(theme) {
-    document.documentElement.dataset.theme = theme;
-    if (themeButton) themeButton.textContent = theme === 'light' ? '☀' : '☾';
-}
-
-applyTheme(savedTheme);
-
-if (themeButton) {
-    themeButton.addEventListener('click', () => {
-        const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-        applyTheme(nextTheme);
-        localStorage.setItem('nestly-theme', nextTheme);
-    });
-}
+const root=document.documentElement,$=id=>document.getElementById(id),sidebar=$('sidebar');
+$('openSidebar')?.addEventListener('click',()=>sidebar.classList.add('open'));
+$('closeSidebar')?.addEventListener('click',()=>sidebar.classList.remove('open'));
+$('themeToggle')?.addEventListener('click',()=>root.dataset.theme=root.dataset.theme==='light'?'dark':'light');
+$('newChat')?.addEventListener('click',()=>{const name=prompt('Enter username to start a chat:');if(name?.trim())alert('User search will be connected to the backend: '+name.trim())});
+$('attachBtn')?.addEventListener('click',()=>alert('Media upload will be connected after storage setup.'));
+$('chatInfo')?.addEventListener('click',()=>$('detailsPanel')?.scrollIntoView({behavior:'smooth'}));
+$('muteBtn')?.addEventListener('click',e=>e.currentTarget.querySelector('span').textContent='Muted');
+$('blockBtn')?.addEventListener('click',()=>alert('Block action will be connected in the backend phase.'));
+$('reportBtn')?.addEventListener('click',()=>alert('Report action will be connected to moderation tools.'));
+document.querySelectorAll('.conversation').forEach(item=>item.addEventListener('click',()=>{document.querySelectorAll('.conversation').forEach(x=>x.classList.remove('active'));item.classList.add('active');const name=item.dataset.name,status=item.dataset.status;$('chatName').textContent=name;$('chatStatus').textContent=status;$('chatAvatar').textContent=name[0].toUpperCase();$('detailsName').textContent=name;$('detailsStatus').textContent=status;$('detailsAvatar').textContent=name[0].toUpperCase();sidebar.classList.remove('open')}));
+$('userSearch')?.addEventListener('input',e=>{const q=e.target.value.toLowerCase().trim();document.querySelectorAll('.conversation').forEach(item=>item.hidden=!item.dataset.name.toLowerCase().includes(q))});
+$('composer')?.addEventListener('submit',e=>{e.preventDefault();const input=$('messageInput'),text=input.value.trim();if(!text)return;const message=document.createElement('div');message.className='message outgoing';message.textContent=text;const time=document.createElement('time');time.textContent='now';message.appendChild(time);$('messageScroll').appendChild(message);input.value='';$('messageScroll').scrollTop=$('messageScroll').scrollHeight});
